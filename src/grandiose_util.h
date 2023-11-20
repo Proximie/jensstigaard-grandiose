@@ -98,13 +98,14 @@ int32_t rejectStatus(napi_env env, carrier *c, char *file, int32_t line);
 
 #define REJECT_STATUS                                                \
   if (rejectStatus(env, c, __FILE__, __LINE__) != GRANDIOSE_SUCCESS) \
-    return;
+    { printf("AVNDILIB: REJECT_STATUS return...\n"); fflush(stdout); return; }
 #define REJECT_RETURN                                                \
   if (rejectStatus(env, c, __FILE__, __LINE__) != GRANDIOSE_SUCCESS) \
-    return promise;
+    { printf("AVNDILIB: REJECT_RETURN return...\n"); fflush(stdout); return promise; }
 #define FLOATING_STATUS                                                        \
   if (status != napi_ok)                                                       \
   {                                                                            \
+    printf("AVNDILIB: FLOATING_STATUS return...\n"); fflush(stdout); \
     printf("Unexpected N-API status not OK in file %s at line %d value %i.\n", \
            __FILE__, __LINE__ - 1, status);                                    \
   }
@@ -112,6 +113,7 @@ int32_t rejectStatus(napi_env env, carrier *c, char *file, int32_t line);
 #define NAPI_THROW_ERROR(msg)              \
   {                                        \
     char errorMsg[100];                    \
+    printf("AVNDILIB: NAPI_THROW_ERROR return...\n"); fflush(stdout); \
     sprintf(errorMsg, msg);                \
     napi_throw_error(env, NULL, errorMsg); \
     return NULL;                           \

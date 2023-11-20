@@ -38,10 +38,11 @@ struct findCarrier : carrier
   // On destroy
   ~findCarrier()
   {
+    printf("AVNDILIB: Destroying %s find carrier.\n", find?"valid":"null"); fflush(stdout);
     if (find != NULL)
     {
-      // printf("Destroying find carrier.\n");
       NDIlib_find_destroy(find);
+      printf("AVNDILIB: Destroyed find carrier.\n"); fflush(stdout);
     }
   };
 };
