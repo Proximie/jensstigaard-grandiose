@@ -289,7 +289,9 @@ void pxlog(const char* pmsg)
   if(plog) { 
     time_t t_; 
     time(&t_);
-    fprintf(plog, "%s AVNDILOG: %s\n", ctime(&t_), pmsg?pmsg:"NULL");
+    char * t_str = ctime(&t_);
+    t_str[strlen(t_str)-1] = '\0';
+    fprintf(plog, "%s AVNDILOG: %s\n", t_str, pmsg?pmsg:"NULL");
     fflush(plog);
   } else {
     printf("AVNDILOG: failed to create file\n");
