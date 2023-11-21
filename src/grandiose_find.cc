@@ -30,7 +30,7 @@
 // Execute async find operaction
 void findExecute(napi_env env, void *data)
 {
-  printf("AVNDILIB: enter findExecute...\n"); fflush(stdout);
+  pxlog("enter findExecute...");
 
   // Find-Carrier based on passed data
   findCarrier *c = (findCarrier *)data;
@@ -51,13 +51,14 @@ void findExecute(napi_env env, void *data)
         "Did not find any NDI streams in the given wait time of " +
         std::to_string(c->wait) + "ms.";
   }
-  printf("AVNDILIB: exit findExecute...\n"); fflush(stdout);
+
+  pxlog("exit findExecute...");
 }
 
 // Find complete callback
 void findComplete(napi_env env, napi_status asyncStatus, void *data)
 {
-  printf("AVNDILIB: enter findComplete...\n"); fflush(stdout);
+  pxlog("enter findComplete...");
 
   // Find-Carrier bbased on passed data
   findCarrier *c = (findCarrier *)data;
@@ -103,12 +104,12 @@ void findComplete(napi_env env, napi_status asyncStatus, void *data)
   // Tidy carrier - cleaning up after returning completed promise value
   tidyCarrier(env, c);
 
-  printf("AVNDILIB: exit findComplete...\n"); fflush(stdout);
+  pxlog("exit findComplete...");
 }
 
 napi_value find(napi_env env, napi_callback_info info)
 {
-  printf("AVNDILIB: enter find...\n"); fflush(stdout);
+  pxlog("enter find...");
 
   // Prepare find carrier
   findCarrier *c = new findCarrier;
@@ -261,7 +262,7 @@ napi_value find(napi_env env, napi_callback_info info)
   c->status = napi_queue_async_work(env, c->_request);
   REJECT_RETURN;
 
-  printf("AVNDILIB: exit find...\n"); fflush(stdout);
+  pxlog("exit find...");
 
   // Return pointer to promise
   return promise;

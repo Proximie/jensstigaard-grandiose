@@ -278,3 +278,20 @@ bool validAudioFormat(Grandiose_audio_format_e format)
     return false;
   }
 }
+
+/*Proximie*/
+void pxlog(const char* pmsg)
+{  
+  static FILE *plog=NULL;
+  if(!plog) {
+    plog = fopen("avlog.txt", "w");
+  }
+  if(plog) { 
+    time_t t_; 
+    time(&t_);
+    fprintf(plog, "%s AVNDILOG: %s\n", ctime(&t_), pmsg?pmsg:"NULL");
+    fflush(plog);
+  } else {
+    printf("AVNDILOG: failed to create file\n");
+  }
+}

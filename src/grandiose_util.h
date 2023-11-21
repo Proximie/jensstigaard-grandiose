@@ -96,16 +96,19 @@ struct carrier
 void tidyCarrier(napi_env env, carrier *c);
 int32_t rejectStatus(napi_env env, carrier *c, char *file, int32_t line);
 
+/*Proximie*/
+void pxlog(const char* pmsg);
+
 #define REJECT_STATUS                                                \
   if (rejectStatus(env, c, __FILE__, __LINE__) != GRANDIOSE_SUCCESS) \
-    { printf("AVNDILIB: REJECT_STATUS return...\n"); fflush(stdout); return; }
+    { pxlog("REJECT_STATUS return..."); return; }
 #define REJECT_RETURN                                                \
   if (rejectStatus(env, c, __FILE__, __LINE__) != GRANDIOSE_SUCCESS) \
-    { printf("AVNDILIB: REJECT_RETURN return...\n"); fflush(stdout); return promise; }
+    { pxlog("REJECT_RETURN return..."); return promise; }
 #define FLOATING_STATUS                                                        \
   if (status != napi_ok)                                                       \
   {                                                                            \
-    printf("AVNDILIB: FLOATING_STATUS return...\n"); fflush(stdout); \
+    pxlog("FLOATING_STATUS return..."); \
     printf("Unexpected N-API status not OK in file %s at line %d value %i.\n", \
            __FILE__, __LINE__ - 1, status);                                    \
   }
@@ -113,7 +116,7 @@ int32_t rejectStatus(napi_env env, carrier *c, char *file, int32_t line);
 #define NAPI_THROW_ERROR(msg)              \
   {                                        \
     char errorMsg[100];                    \
-    printf("AVNDILIB: NAPI_THROW_ERROR return...\n"); fflush(stdout); \
+    pxlog("NAPI_THROW_ERROR return..."); \
     sprintf(errorMsg, msg);                \
     napi_throw_error(env, NULL, errorMsg); \
     return NULL;                           \
